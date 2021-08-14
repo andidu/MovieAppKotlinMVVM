@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">MovieAppKotlinMVVM</string>
+
+
+    <string name="review_x">%1$d review</string>
+    <string name="reviews_x">%1$d reviews</string>
+    <string name="age_more">%1$d+</string>
+    <string name="error_movie_not_found">Movie not found</string>
+    <string name="_min">%1$dMIN</string>
+</resources>
