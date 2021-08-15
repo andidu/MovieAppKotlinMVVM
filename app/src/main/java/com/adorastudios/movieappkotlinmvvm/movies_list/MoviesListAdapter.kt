@@ -12,6 +12,7 @@ import coil.load
 import com.adorastudios.movieappkotlinmvvm.R
 import com.adorastudios.movieappkotlinmvvm.data.Genre
 import com.adorastudios.movieappkotlinmvvm.data.MoviePreview
+import kotlin.math.roundToInt
 
 class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) :
     ListAdapter<MoviePreview, MoviesListAdapter.MovieViewHolder>(
@@ -27,7 +28,7 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
     }
 
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val starImage: Array<ImageView> = arrayOf(
+        private val starImages: Array<ImageView> = arrayOf(
             itemView.findViewById(R.id.imageViewStar1),
             itemView.findViewById(R.id.imageViewStar2),
             itemView.findViewById(R.id.imageViewStar3),
@@ -68,16 +69,14 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
                 }
             )
 
-            var counter = 0
-            val rating: Int = movie.rating / 2
-            while (counter < rating) {
-                starImage[counter].setImageResource(R.drawable.ic_star_icon_pink)
-                counter++
-            }
-
-            while (counter < 5) {
-                starImage[counter].setImageResource(R.drawable.ic_star_icon)
-                counter++
+            starImages.forEachIndexed { index, image ->
+                image?.let {
+                    if ((movie.rating / 2.0).roundToInt() > index) {
+                        image.setImageResource(R.drawable.ic_star_icon_pink)
+                    } else {
+                        image.setImageResource(R.drawable.ic_star_icon)
+                    }
+                }
             }
 
             movieImage.load(movie.imageUrl)

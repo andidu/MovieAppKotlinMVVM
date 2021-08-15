@@ -1,4 +1,4 @@
-package com.adorastudios.movieappkotlinmvvm.movies_list.movie_repository
+package com.adorastudios.movieappkotlinmvvm.movie_repository
 
 interface MovieRepositoryProvider {
     fun provideMovieRepository(): MovieRepository

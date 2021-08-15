@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adorastudios.movieappkotlinmvvm.R
 import com.adorastudios.movieappkotlinmvvm.data.MoviePreview
-import com.adorastudios.movieappkotlinmvvm.movies_list.movie_repository.MovieRepositoryProvider
+import com.adorastudios.movieappkotlinmvvm.movie_repository.MovieRepositoryProvider
 
 /**
  * Fragment to be used on the main screen to provide user with list of movies

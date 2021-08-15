@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adorastudios.movieappkotlinmvvm.data.MoviePreview
-import com.adorastudios.movieappkotlinmvvm.movies_list.movie_repository.MovieRepository
+import com.adorastudios.movieappkotlinmvvm.movie_repository.MovieRepository
 import kotlinx.coroutines.launch
 
 class MoviesListViewModel(private val repository: MovieRepository) : ViewModel() {

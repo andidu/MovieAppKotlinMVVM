@@ -8,6 +8,6 @@ data class MoviePreview (
     val genres: List<Genre>,
     val runningTime: Int,
     val reviewCount: Int,
-    val rating: Int,
+    val rating: Double,
     val isLiked: Boolean
 )

@@ -7,7 +7,7 @@ data class MovieDetails (
     val detailImageUrl: String,
     val age: Int,
     val genres: List<Genre>,
-    val rating: Int,
+    val rating: Double,
     val isLiked: Boolean,
     val actors: List<Actor>,
     val reviewCount: Int
