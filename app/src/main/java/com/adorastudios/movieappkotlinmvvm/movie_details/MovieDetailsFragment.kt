@@ -15,12 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.adorastudios.movieappkotlinmvvm.R
-import com.adorastudios.movieappkotlinmvvm.data.Genre
-import com.adorastudios.movieappkotlinmvvm.data.MovieDetails
-import com.adorastudios.movieappkotlinmvvm.data.MoviePreview
-import com.adorastudios.movieappkotlinmvvm.movie_repository.MovieRepository
-import com.adorastudios.movieappkotlinmvvm.movie_repository.MovieRepositoryProvider
-import org.w3c.dom.Text
+import com.adorastudios.movieappkotlinmvvm.model.Genre
+import com.adorastudios.movieappkotlinmvvm.model.MovieDetails
+import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryProvider
 import kotlin.math.roundToInt
 
 

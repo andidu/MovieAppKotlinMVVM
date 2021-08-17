@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/movie" />
+            tools:srcCompat="@mipmap/movie" />
 
         <View
             android:layout_width="0dp"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Back"
+            android:text="@string/back"
             app:layout_constraintStart_toEndOf="@+id/imageViewBack"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -76,7 +76,7 @@
             android:paddingTop="4dp"
             android:paddingEnd="12dp"
             android:paddingBottom="4dp"
-            android:text="13+"
+            tools:text="13+"
             android:textColor="@color/white"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textViewMovie"
@@ -87,7 +87,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:textColor="@color/pink"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -100,7 +100,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/textViewReviewAmount"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
             app:layout_constraintTop_toTopOf="@+id/textViewReviewAmount"
-            app:srcCompat="@drawable/ic_star_icon" />
+            tools:srcCompat="@drawable/ic_star_icon" />
 
         <ImageView
             android:id="@+id/imageViewStar2"
@@ -110,7 +110,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageViewStar1"
             app:layout_constraintStart_toEndOf="@+id/imageViewStar1"
             app:layout_constraintTop_toTopOf="@+id/imageViewStar1"
-            app:srcCompat="@drawable/ic_star_icon" />
+            tools:srcCompat="@drawable/ic_star_icon" />
 
         <ImageView
             android:id="@+id/imageViewStar3"
@@ -120,7 +120,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageViewStar1"
             app:layout_constraintStart_toEndOf="@+id/imageViewStar2"
             app:layout_constraintTop_toTopOf="@+id/imageViewStar1"
-            app:srcCompat="@drawable/ic_star_icon" />
+            tools:srcCompat="@drawable/ic_star_icon" />
 
         <ImageView
             android:id="@+id/imageViewStar4"
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageViewStar1"
             app:layout_constraintStart_toEndOf="@+id/imageViewStar3"
             app:layout_constraintTop_toTopOf="@+id/imageViewStar1"
-            app:srcCompat="@drawable/ic_star_icon" />
+            tools:srcCompat="@drawable/ic_star_icon" />
 
         <ImageView
             android:id="@+id/imageViewStar5"
@@ -140,7 +140,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageViewStar1"
             app:layout_constraintStart_toEndOf="@+id/imageViewStar4"
             app:layout_constraintTop_toTopOf="@+id/imageViewStar1"
-            app:srcCompat="@drawable/ic_star_icon" />
+            tools:srcCompat="@drawable/ic_star_icon" />
 
         <TextView
             android:id="@+id/textViewReviewAmount"
@@ -148,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:textAllCaps="true"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -160,7 +160,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="254dp"
-            android:text="TextView"
+            tools:text="TextView"
             android:textColor="@color/white"
             android:textSize="40sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
@@ -172,7 +172,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Storyline"
+            tools:text="Storyline"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -183,7 +183,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Storyline"
+            android:text="@string/storyline"
             android:textColor="@color/gray"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
@@ -194,7 +194,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Cast"
+            android:text="@string/cast"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineLeft"

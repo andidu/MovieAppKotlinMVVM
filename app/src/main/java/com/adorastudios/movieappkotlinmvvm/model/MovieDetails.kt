@@ -1,10 +1,10 @@
-package com.adorastudios.movieappkotlinmvvm.data
+package com.adorastudios.movieappkotlinmvvm.model
 
 data class MovieDetails (
     val id: Int,
     val title: String,
     val storyLine: String,
-    val detailImageUrl: String,
+    val detailImageUrl: String?,
     val age: Int,
     val genres: List<Genre>,
     val rating: Double,

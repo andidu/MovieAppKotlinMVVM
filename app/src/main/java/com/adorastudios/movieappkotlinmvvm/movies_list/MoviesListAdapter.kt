@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.adorastudios.movieappkotlinmvvm.R
-import com.adorastudios.movieappkotlinmvvm.data.Genre
-import com.adorastudios.movieappkotlinmvvm.data.MoviePreview
+import com.adorastudios.movieappkotlinmvvm.model.Genre
+import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 import kotlin.math.roundToInt
 
 class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) :
@@ -70,7 +70,7 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
             )
 
             starImages.forEachIndexed { index, image ->
-                image?.let {
+                image.let {
                     if ((movie.rating / 2.0).roundToInt() > index) {
                         image.setImageResource(R.drawable.ic_star_icon_pink)
                     } else {

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.adorastudios.movieappkotlinmvvm.R
-import com.adorastudios.movieappkotlinmvvm.data.Actor
+import com.adorastudios.movieappkotlinmvvm.model.Actor
 
 class ActorsListAdapter :
     ListAdapter<Actor, ActorsListAdapter.ActorViewHolder>(
