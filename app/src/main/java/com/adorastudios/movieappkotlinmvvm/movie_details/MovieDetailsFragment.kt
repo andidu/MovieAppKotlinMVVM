@@ -27,7 +27,7 @@ import kotlin.math.roundToInt
  */
 class MovieDetailsFragment : Fragment() {
 
-    var listener: ClickBackListener? = null
+    private var listener: ClickBackListener? = null
     private val viewModel: MovieDetailsViewModel by viewModels {
         MovieDetailsViewModelFactory(
             (requireActivity() as MovieRepositoryProvider).provideMovieRepository()
@@ -57,12 +57,13 @@ class MovieDetailsFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.textViewBack).setOnClickListener { listener?.onClick() }
 
-        val id = arguments?.getSerializable(PARAM_MOVIE_ID) as? Int ?: return
+        val id = arguments?.getSerializable(PARAM_MOVIE_ID) as? Long ?: return
         viewModel.loadMovie(id)
 
         viewModel.movie.observe(this.viewLifecycleOwner) { state ->
             when (state) {
                 is MovieDetailsState.MovieLoaded -> bindUI(view, state.movie)
+                is MovieDetailsState.MovieNotLoaded -> showMovieNotFound()
                 is MovieDetailsState.MovieError -> showMovieError()
             }
         }
@@ -111,7 +112,11 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun showMovieError() {
-        Toast.makeText(requireContext(), R.string.error_movie_not_found, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), R.string.error_movie, Toast.LENGTH_LONG).show()
+    }
+
+    private fun showMovieNotFound() {
+        Toast.makeText(requireContext(), R.string.error_movie_not_found, Toast.LENGTH_LONG).show()
     }
 
     override fun onDetach() {
@@ -127,9 +132,10 @@ class MovieDetailsFragment : Fragment() {
         private const val PARAM_MOVIE_ID = "movie_id"
 
         @JvmStatic
-        fun newInstance(movieId: Int) = MovieDetailsFragment().also {
+        fun newInstance(movieId: Long) = MovieDetailsFragment().also {
             val args = bundleOf(PARAM_MOVIE_ID to movieId)
             it.arguments = args
+
         }
     }
 }

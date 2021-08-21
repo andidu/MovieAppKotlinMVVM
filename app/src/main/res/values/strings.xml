@@ -6,6 +6,7 @@
     <string name="reviews_x">%1$d reviews</string>
     <string name="age_more">%1$d+</string>
     <string name="error_movie_not_found">Movie not found</string>
+    <string name="error_movie">Unable to load a movie. Please check your Internet connection</string>
     <string name="_min">%1$dMIN</string>
     <string name="back">Back</string>
     <string name="storyline">Storyline</string>

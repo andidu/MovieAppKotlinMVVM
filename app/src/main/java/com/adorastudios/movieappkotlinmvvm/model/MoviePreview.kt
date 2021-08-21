@@ -1,7 +1,7 @@
 package com.adorastudios.movieappkotlinmvvm.model
 
 data class MoviePreview (
-    val id: Int,
+    val id: Long,
     val title: String,
     val imageUrl: String?,
     val age: Int,

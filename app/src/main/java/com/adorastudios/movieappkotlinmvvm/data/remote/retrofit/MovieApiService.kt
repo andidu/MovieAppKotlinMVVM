@@ -24,12 +24,12 @@ interface MovieApiService {
     //get movie (details)
     @GET("movie/{movie_id}")
     suspend fun loadMovieDetails(
-        @Path("movie_id") movieId: Int
+        @Path("movie_id") movieId: Long
     ): MovieDetailsResponse
 
     //get movie cast
     @GET("movie/{movie_id}/credits")
     suspend fun loadMovieCast(
-        @Path("movie_id") movieId: Int
+        @Path("movie_id") movieId: Long
     ): MovieCastResponse
 }

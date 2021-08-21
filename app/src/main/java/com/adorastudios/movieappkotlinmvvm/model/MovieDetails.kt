@@ -1,7 +1,7 @@
 package com.adorastudios.movieappkotlinmvvm.model
 
 data class MovieDetails (
-    val id: Int,
+    val id: Long,
     val title: String,
     val storyLine: String,
     val detailImageUrl: String?,

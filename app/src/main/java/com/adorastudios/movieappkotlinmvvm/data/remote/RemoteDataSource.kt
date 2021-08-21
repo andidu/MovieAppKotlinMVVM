@@ -5,5 +5,5 @@ import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 
 interface RemoteDataSource {
     suspend fun loadMovies() : List<MoviePreview>
-    suspend fun loadMovie(id: Int) : MovieDetails
+    suspend fun loadMovie(id: Long) : MovieDetails
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,7 +52,16 @@ class MoviesListFragment : Fragment() {
         recycler.adapter = adapter
 
         viewModel.movies.observe(this.viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it is MoviesListViewState.MoviesLoaded) {
+                adapter.submitList(it.movies)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Error while loading movies",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            //adapter.submitList(it)
         }
     }
 

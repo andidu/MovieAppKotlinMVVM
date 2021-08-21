@@ -41,7 +41,7 @@ class RetrofitDataSource (private val api: MovieApiService) : RemoteDataSource {
         }
     }
 
-    override suspend fun loadMovie(id: Int): MovieDetails {
+    override suspend fun loadMovie(id: Long): MovieDetails {
         loadConfiguration()
         val details = api.loadMovieDetails(id)
         return MovieDetails(

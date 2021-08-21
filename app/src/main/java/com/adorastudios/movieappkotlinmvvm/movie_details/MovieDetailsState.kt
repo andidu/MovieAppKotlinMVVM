@@ -4,5 +4,6 @@ import com.adorastudios.movieappkotlinmvvm.model.MovieDetails
 
 sealed class MovieDetailsState {
     class MovieLoaded(val movie: MovieDetails) : MovieDetailsState()
-    object MovieError : MovieDetailsState()
+    object MovieNotLoaded : MovieDetailsState()
+    class MovieError(val error: Throwable) : MovieDetailsState()
 }
