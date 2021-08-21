@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.adorastudios.movieappkotlinmvvm.R
 import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryProvider
+import com.adorastudios.movieappkotlinmvvm.notifications.NotificationsImpl
 
 /**
  * Fragment to be used on the main screen to provide user with list of movies
@@ -21,8 +22,12 @@ import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryProvid
 class MoviesListFragment : Fragment() {
 
     private var listener: ClickMovieListener? = null
-    private val viewModel: MoviesListViewModel by viewModels { MoviesListViewModelFactory(
-        (requireActivity() as MovieRepositoryProvider).provideMovieRepository())}
+    private val viewModel: MoviesListViewModel by viewModels {
+        MoviesListViewModelFactory(
+            (requireActivity() as MovieRepositoryProvider).provideMovieRepository(),
+            NotificationsImpl(requireContext())
+        )
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,8 +50,9 @@ class MoviesListFragment : Fragment() {
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerViewMovies)
         recycler.layoutManager = GridLayoutManager(context, 2)
 
-        val adapter = MoviesListAdapter {movieData
-            -> listener?.onClick(movieData)
+        val adapter = MoviesListAdapter { movieData
+            ->
+            listener?.onClick(movieData)
         }
 
         recycler.adapter = adapter
@@ -54,6 +60,7 @@ class MoviesListFragment : Fragment() {
         viewModel.movies.observe(this.viewLifecycleOwner) {
             if (it is MoviesListViewState.MoviesLoaded) {
                 adapter.submitList(it.movies)
+                viewModel.showNotification(it.movies)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -61,8 +68,8 @@ class MoviesListFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            //adapter.submitList(it)
         }
+
     }
 
 

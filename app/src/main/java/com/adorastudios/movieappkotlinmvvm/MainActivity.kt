@@ -1,5 +1,6 @@
 package com.adorastudios.movieappkotlinmvvm
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.adorastudios.movieappkotlinmvvm.data.locale.LocaleDataSource
@@ -14,6 +15,8 @@ import com.adorastudios.movieappkotlinmvvm.movies_list.MoviesListFragment
 import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepository
 import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryImpl
 import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryProvider
+import com.adorastudios.movieappkotlinmvvm.notifications.Notifications
+import com.adorastudios.movieappkotlinmvvm.notifications.NotificationsImpl
 
 class MainActivity : AppCompatActivity(),
     MovieRepositoryProvider,
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(),
     private lateinit var database: MovieDatabase
     private lateinit var localeDataSource: LocaleDataSource
     private lateinit var movieRepository: MovieRepositoryImpl
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +42,9 @@ class MainActivity : AppCompatActivity(),
 
         if (savedInstanceState == null) {
             toMovieList()
+            intent?.let {
+                handleIntent(it)
+            }
         }
     }
 
@@ -52,11 +59,11 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
-    private fun toMovieDetails(movie: MoviePreview) {
+    private fun toMovieDetails(id: Long) {
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.fragment,
-                MovieDetailsFragment.newInstance(movie.id),
+                MovieDetailsFragment.newInstance(id),
                 MoviesListFragment::class.java.simpleName
             )
             .addToBackStack("transition:${MovieDetailsFragment::class.java.simpleName}")
@@ -72,10 +79,22 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onClick(movie: MoviePreview) {
-        toMovieDetails(movie)
+        toMovieDetails(movie.id)
     }
 
     override fun onClick() {
         fromMovieDetails()
+    }
+
+    private fun handleIntent(intent: Intent) {
+        when (intent.action) {
+            Intent.ACTION_VIEW -> {
+                val id = intent.data?.lastPathSegment?.toLongOrNull()
+                id?.let {
+                    NotificationsImpl(context).dismissNotification(id)
+                    toMovieDetails(id)
+                }
+            }
+        }
     }
 }
