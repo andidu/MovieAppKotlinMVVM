@@ -14,7 +14,7 @@ import com.adorastudios.movieappkotlinmvvm.model.Genre
 import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 import kotlin.math.roundToInt
 
-class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) :
+class MoviesListAdapter(private val onClickMovie: (item: MoviePreview, card: View) -> Unit) :
     ListAdapter<MoviePreview, MoviesListAdapter.MovieViewHolder>(
         DiffCallback()) {
 
@@ -24,6 +24,7 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+        holder.itemView.transitionName = holder.itemView.context.getString(R.string.transition_preview) + position
         holder.onBind(getItem(position), onClickMovie)
     }
 
@@ -45,7 +46,7 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
 
         private val movieImage: ImageView = itemView.findViewById(R.id.imageViewMovie)
 
-        fun onBind(movie: MoviePreview, onClickMovie: (item: MoviePreview) -> Unit) {
+        fun onBind(movie: MoviePreview, onClickMovie: (item: MoviePreview, card: View) -> Unit) {
             movieName.text = movie.title
             var genres = ""
             for (g: Genre in movie.genres) {
@@ -82,7 +83,7 @@ class MoviesListAdapter(private val onClickMovie: (item: MoviePreview) -> Unit) 
             movieImage.load(movie.imageUrl)
 
             itemView.setOnClickListener {
-                onClickMovie(movie)
+                onClickMovie(movie, it)
             }
         }
     }

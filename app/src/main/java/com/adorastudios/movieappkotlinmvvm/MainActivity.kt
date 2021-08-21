@@ -3,6 +3,7 @@ package com.adorastudios.movieappkotlinmvvm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.work.*
 import com.adorastudios.movieappkotlinmvvm.data.locale.LocaleDataSource
 import com.adorastudios.movieappkotlinmvvm.data.locale.MovieDatabase
@@ -75,6 +76,18 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
+    private fun toMovieDetails(id: Long, card: View) {
+        supportFragmentManager.beginTransaction()
+            .addSharedElement(card, getString(R.string.transition_details))
+            .replace(
+                R.id.fragment,
+                MovieDetailsFragment.newInstance(id),
+                MoviesListFragment::class.java.simpleName
+            )
+            .addToBackStack("transition:${MovieDetailsFragment::class.java.simpleName}")
+            .commit()
+    }
+
     private fun toMovieDetails(id: Long) {
         supportFragmentManager.beginTransaction()
             .replace(
@@ -94,8 +107,8 @@ class MainActivity : AppCompatActivity(),
         return movieRepository
     }
 
-    override fun onClick(movie: MoviePreview) {
-        toMovieDetails(movie.id)
+    override fun onClick(movie: MoviePreview, card: View) {
+        toMovieDetails(movie.id, card)
     }
 
     override fun onClick() {

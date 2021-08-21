@@ -11,4 +11,7 @@
     <string name="back">Back</string>
     <string name="storyline">Storyline</string>
     <string name="cast">Cast</string>
+
+    <string name="transition_details">transition_details22</string>
+    <string name="transition_preview">transition_preview22</string>
 </resources>
