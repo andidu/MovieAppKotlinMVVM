@@ -3,6 +3,7 @@ package com.adorastudios.movieappkotlinmvvm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.work.*
 import com.adorastudios.movieappkotlinmvvm.data.locale.LocaleDataSource
 import com.adorastudios.movieappkotlinmvvm.data.locale.MovieDatabase
 import com.adorastudios.movieappkotlinmvvm.data.locale.room.RoomDataSource
@@ -17,6 +18,7 @@ import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryImpl
 import com.adorastudios.movieappkotlinmvvm.data.repository.MovieRepositoryProvider
 import com.adorastudios.movieappkotlinmvvm.notifications.Notifications
 import com.adorastudios.movieappkotlinmvvm.notifications.NotificationsImpl
+import com.adorastudios.movieappkotlinmvvm.worker.RefreshDatabaseWorker
 
 class MainActivity : AppCompatActivity(),
     MovieRepositoryProvider,
@@ -39,6 +41,20 @@ class MainActivity : AppCompatActivity(),
         database = MovieDatabase.create(this)
         localeDataSource = RoomDataSource(database)
         movieRepository = MovieRepositoryImpl(remoteDataSource, localeDataSource)
+
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val work = PeriodicWorkRequestBuilder<RefreshDatabaseWorker>(8,
+            java.util.concurrent.TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .build()
+
+        val workManager = WorkManager.getInstance(this)
+        workManager.enqueueUniquePeriodicWork("name1", ExistingPeriodicWorkPolicy.REPLACE, work)
 
         if (savedInstanceState == null) {
             toMovieList()
