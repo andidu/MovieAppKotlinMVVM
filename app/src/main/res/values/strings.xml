@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieAppKotlinMVVM</string>
+    <string name="app_name">Movie App</string>
 
 
     <string name="review_x">%1$d review</string>
