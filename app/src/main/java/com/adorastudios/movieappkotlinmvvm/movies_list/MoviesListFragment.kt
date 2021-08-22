@@ -1,6 +1,7 @@
 package com.adorastudios.movieappkotlinmvvm.movies_list
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +19,7 @@ import com.adorastudios.movieappkotlinmvvm.notifications.NotificationsImpl
 
 /**
  * Fragment to be used on the main screen to provide user with list of movies
- * Content shall be shown in two columns for vertical layout and TODO for horizontal layout
+ * Content shall be shown in two columns for vertical layout and 5 for horizontal layout
  */
 class MoviesListFragment : Fragment() {
 
@@ -54,7 +55,12 @@ class MoviesListFragment : Fragment() {
         }
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerViewMovies)
-        recycler.layoutManager = GridLayoutManager(context, 2)
+        recycler.setHasFixedSize(true)
+        recycler.layoutManager = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            GridLayoutManager(context, 5)
+        } else {
+            GridLayoutManager(context, 2)
+        }
 
         val adapter = MoviesListAdapter { movieData, card ->
             listener?.onClick(movieData, card)
@@ -66,11 +72,16 @@ class MoviesListFragment : Fragment() {
             if (it is MoviesListViewState.MoviesLoaded) {
                 adapter.submitList(it.movies)
                 viewModel.showNotification(it.movies)
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.movie_list_updated),
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
                 Toast.makeText(
                     requireContext(),
-                    "Error while loading movies",
-                    Toast.LENGTH_SHORT
+                    getString(R.string.error_while_loading_movies),
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }

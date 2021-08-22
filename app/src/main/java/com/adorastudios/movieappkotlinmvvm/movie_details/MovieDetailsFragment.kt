@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -69,7 +70,7 @@ class MovieDetailsFragment : Fragment() {
         recycler.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycler.adapter = ActorsListAdapter()
 
-        view.findViewById<TextView>(R.id.textViewBack).setOnClickListener { listener?.onClick() }
+        view.findViewById<LinearLayout>(R.id.layoutBack).setOnClickListener { listener?.onClick() }
 
         val id = arguments?.getSerializable(PARAM_MOVIE_ID) as? Long ?: return
         viewModel.loadMovie(id)
