@@ -7,7 +7,8 @@ import androidx.room.RoomDatabase
 import com.adorastudios.movieappkotlinmvvm.data.locale.room.*
 
 @Database(
-    entities = [MoviePreviewsDB::class, MovieDetailsDB::class, ActorDB::class, GenreDB::class],
+    entities = [MoviePreviewsDB::class, MovieDetailsDB::class, ActorDB::class,
+        GenreDB::class, ActorMovieDB::class, GenreMovieDB::class],
     version = 1
 )
 abstract class MovieDatabase : RoomDatabase() {
@@ -25,6 +26,5 @@ abstract class MovieDatabase : RoomDatabase() {
                 .build()
     }
 
-    abstract fun getMoviePreviewsDao(): MoviePreviewsDao
-    abstract fun getMovieDetailsDao(): MovieDetailsDao
+    abstract fun getMovieDao(): MovieDao
 }

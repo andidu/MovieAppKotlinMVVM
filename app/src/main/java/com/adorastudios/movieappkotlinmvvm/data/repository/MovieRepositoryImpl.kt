@@ -7,6 +7,7 @@ import com.adorastudios.movieappkotlinmvvm.data.runCatchingResult
 import com.adorastudios.movieappkotlinmvvm.model.MovieDetails
 import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MovieRepositoryImpl(
@@ -14,32 +15,38 @@ class MovieRepositoryImpl(
     private val localeDataSource: LocaleDataSource
 ) : MovieRepository {
 
-    override suspend fun loadMovies(): Result<List<MoviePreview>> {
+    override suspend fun loadMoviesRemote(): Result<List<MoviePreview>> {
         return runCatchingResult {
             withContext(Dispatchers.IO) {
-                val moviePreviewDB = localeDataSource.loadMovies()
-                if (moviePreviewDB.isEmpty()) {
-                    val moviePreviews = remoteDataSource.loadMovies()
-                    localeDataSource.insertMovies(moviePreviews)
-                    moviePreviews
-                } else {
-                    moviePreviewDB
-                }
+                val movies = remoteDataSource.loadMovies()
+                launch { localeDataSource.insertMovies(movies) }
+                movies
             }
         }
     }
 
-    override suspend fun loadMovie(movieId: Long): Result<MovieDetails> {
+    override suspend fun loadMovieRemote(movieId: Long): Result<MovieDetails> {
         return runCatchingResult {
             withContext(Dispatchers.IO) {
-                val movieDetailsDB = localeDataSource.loadMovie(movieId)
-                if (movieDetailsDB.isEmpty()) {
-                    val movieDetails = remoteDataSource.loadMovie(movieId)
-                    localeDataSource.insertMovieDetails(movieDetails)
-                    movieDetails
-                } else {
-                    movieDetailsDB.first()
-                }
+                val movie = remoteDataSource.loadMovie(movieId)
+                launch { localeDataSource.insertMovieDetails(movie) }
+                movie
+            }
+        }
+    }
+
+    override suspend fun loadMoviesLocale(): Result<List<MoviePreview>> {
+        return runCatchingResult {
+            withContext(Dispatchers.IO) {
+                localeDataSource.loadMovies()
+            }
+        }
+    }
+
+    override suspend fun loadMovieLocale(movieId: Long): Result<MovieDetails> {
+        return runCatchingResult {
+            withContext(Dispatchers.IO) {
+                localeDataSource.loadMovie(movieId).first()
             }
         }
     }

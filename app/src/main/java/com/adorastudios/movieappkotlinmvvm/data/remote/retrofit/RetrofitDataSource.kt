@@ -21,17 +21,15 @@ class RetrofitDataSource (private val api: MovieApiService) : RemoteDataSource {
 
     override suspend fun loadMovies(): List<MoviePreview> {
         loadConfiguration()
-        val genres = api.loadGenres().genres
+        val genres = loadGenres()
         return api.loadUpcoming(page = 1).results.map { movie ->
             MoviePreview(
                 id = movie.id,
                 title = movie.title,
                 imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
                 age = if (movie.adult) 16 else 13,
-                genres = genres.filter { genreResponse ->
-                    movie.genreIds.contains(genreResponse.id)
-                }.map { genreResponse ->
-                    Genre(genreResponse.id, genreResponse.name)
+                genres = genres.filter { genre ->
+                    movie.genreIds.contains(genre.id)
                 },
                 runningTime = -1,
                 reviewCount = movie.voteCount,
@@ -55,11 +53,22 @@ class RetrofitDataSource (private val api: MovieApiService) : RemoteDataSource {
             },
             rating = details.voteAverage,
             isLiked = false,
-            actors = api.loadMovieCast(id).cast.map {
-                Actor(it.id, it.name, formingUrl(baseUrl, posterSize, it.profilePath))
-            },
+            actors = loadActors(id),
             reviewCount = details.voteCount
         )
+    }
+
+    override suspend fun loadGenres(): List<Genre> {
+        return api.loadGenres().genres.map { genreResponse ->
+            Genre(genreResponse.id, genreResponse.name)
+        }
+    }
+
+    override suspend fun loadActors(id: Long): List<Actor> {
+        loadConfiguration()
+        return api.loadMovieCast(id).cast.map {
+            Actor(it.id, it.name, formingUrl(baseUrl, posterSize, it.profilePath))
+        }
     }
 
     private suspend fun loadConfiguration() {

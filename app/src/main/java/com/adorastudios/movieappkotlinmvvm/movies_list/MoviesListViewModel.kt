@@ -20,31 +20,61 @@ class MoviesListViewModel(
 
     private val moviesList: MutableLiveData<MoviesListViewState> = MutableLiveData()
     val movies: MutableLiveData<MoviesListViewState> get() = moviesList
+
+    private val loadedFrom: MutableLiveData<LoadedFrom> = MutableLiveData()
+    val loaded: MutableLiveData<LoadedFrom> get() = loadedFrom
+
     private val random = Random(System.currentTimeMillis())
 
-    init {
+    fun init() {
+        loadedFrom.postValue(LoadedFrom.Nowhere)
         loadMovies()
         notifications.initialize()
     }
 
     private fun loadMovies() {
         viewModelScope.launch {
-            handleMoviePreviewResult(repository.loadMovies())
+            handleMoviePreviewRemoteResult(repository.loadMoviesRemote())
         }
     }
 
-    private fun handleMoviePreviewResult(result: Result<List<MoviePreview>>) {
+    private fun handleMoviePreviewRemoteResult(result: Result<List<MoviePreview>>) {
         when (result) {
-            is Success -> moviesList.postValue(MoviesListViewState.MoviesLoaded(result.data))
+            is Success -> {
+                moviesList.postValue(MoviesListViewState.MoviesLoaded(result.data))
+                loadedFrom.postValue(LoadedFrom.FromRemote)
+            }
+            is Failure -> loadMoviesFromDB()
+        }
+    }
+
+    private fun loadMoviesFromDB() {
+        viewModelScope.launch {
+            handleMoviePreviewLocaleResult(repository.loadMoviesLocale())
+        }
+    }
+
+    private fun handleMoviePreviewLocaleResult(result: Result<List<MoviePreview>>) {
+        when (result) {
+            is Success -> {
+                moviesList.postValue(MoviesListViewState.MoviesLoaded(result.data))
+                loadedFrom.postValue(LoadedFrom.FromLocale)
+            }
             is Failure -> moviesList.postValue(MoviesListViewState.FailedToLoad(result.exception))
         }
     }
 
-    fun showNotification(list: List<MoviePreview>) {
+    fun finishLoading() {
+        loadedFrom.postValue(LoadedFrom.Nowhere)
+    }
+
+    fun showNotification(list: List<MoviePreview>) :Boolean {
+        if (list.isEmpty()) return false
         val randomId = list[random.nextInt(list.size)].id
         viewModelScope.launch {
-            handleMovieDetailsResult(repository.loadMovie(randomId))
+            handleMovieDetailsResult(repository.loadMovieRemote(randomId))
         }
+        return true
     }
 
     private fun handleMovieDetailsResult(result: Result<MovieDetails>) {

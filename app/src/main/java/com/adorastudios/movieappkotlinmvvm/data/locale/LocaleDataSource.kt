@@ -5,7 +5,7 @@ import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 
 interface LocaleDataSource {
     suspend fun loadMovies(): List<MoviePreview>
-    fun insertMovies(moviePreviewFromNetwork: List<MoviePreview>)
+    suspend fun insertMovies(moviePreviewFromNetwork: List<MoviePreview>)
     suspend fun loadMovie(movieId: Long): List<MovieDetails>
-    fun insertMovieDetails(movieDetailsFromNetwork: MovieDetails)
+    suspend fun insertMovieDetails(movieDetailsFromNetwork: MovieDetails)
 }

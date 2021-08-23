@@ -68,15 +68,28 @@ class MoviesListFragment : Fragment() {
 
         recycler.adapter = adapter
 
-        viewModel.movies.observe(this.viewLifecycleOwner) {
-            if (it is MoviesListViewState.MoviesLoaded) {
-                adapter.submitList(it.movies)
-                viewModel.showNotification(it.movies)
+        viewModel.init()
+        viewModel.loaded.observe(this.viewLifecycleOwner) {
+            if (it is LoadedFrom.FromRemote) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.movie_list_updated),
                     Toast.LENGTH_SHORT
                 ).show()
+                viewModel.finishLoading()
+            } else if (it is LoadedFrom.FromLocale) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.unable_to_update_movie_list),
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.finishLoading()
+            }
+        }
+        viewModel.movies.observe(this.viewLifecycleOwner) {
+            if (it is MoviesListViewState.MoviesLoaded) {
+                adapter.submitList(it.movies)
+                viewModel.showNotification(it.movies)
             } else {
                 Toast.makeText(
                     requireContext(),
@@ -87,7 +100,6 @@ class MoviesListFragment : Fragment() {
         }
 
     }
-
 
     override fun onDetach() {
         listener = null

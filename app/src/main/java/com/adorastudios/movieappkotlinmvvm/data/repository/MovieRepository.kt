@@ -5,6 +5,9 @@ import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
 import com.adorastudios.movieappkotlinmvvm.data.Result
 
 interface MovieRepository {
-    suspend fun loadMovies(): Result<List<MoviePreview>>
-    suspend fun loadMovie(movieId: Long): Result<MovieDetails>
+    suspend fun loadMoviesRemote(): Result<List<MoviePreview>>
+    suspend fun loadMovieRemote(movieId: Long): Result<MovieDetails>
+
+    suspend fun loadMoviesLocale(): Result<List<MoviePreview>>
+    suspend fun loadMovieLocale(movieId: Long): Result<MovieDetails>
 }

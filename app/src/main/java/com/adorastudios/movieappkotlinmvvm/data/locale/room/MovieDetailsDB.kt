@@ -2,8 +2,6 @@ package com.adorastudios.movieappkotlinmvvm.data.locale.room
 
 import androidx.room.*
 import com.adorastudios.movieappkotlinmvvm.data.locale.MovieDbContract
-import com.adorastudios.movieappkotlinmvvm.model.Actor
-import com.adorastudios.movieappkotlinmvvm.model.Genre
 
 @Entity(
     tableName = MovieDbContract.MovieDetailsTable.TABLE_NAME,

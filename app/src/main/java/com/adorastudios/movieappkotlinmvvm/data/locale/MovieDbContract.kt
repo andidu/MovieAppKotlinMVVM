@@ -27,10 +27,8 @@ object MovieDbContract {
         const val COLUMN_NAME_STORY = "story_line"
         const val COLUMN_NAME_IMAGE = "image"
         const val COLUMN_NAME_AGE = "age"
-        const val COLUMN_NAME_GENRES = "genres"
         const val COLUMN_NAME_RATING = "rating"
         const val COLUMN_NAME_LIKE = "like"
-        const val COLUMN_NAME_ACTORS = "actors"
         const val COLUMN_NAME_REVIEWS = "reviews"
     }
 
@@ -47,5 +45,21 @@ object MovieDbContract {
 
         const val COLUMN_NAME_ID = BaseColumns._ID
         const val COLUMN_NAME_NAME = "name"
+    }
+
+    object ActorMovieTable {
+        const val TABLE_NAME = "actor_movie"
+
+        const val COLUMN_NAME_ID_INTERNAL = BaseColumns._ID
+        const val COLUMN_NAME_MOVIE = "movie_id"
+        const val COLUMN_NAME_ACTOR = "actor_id"
+    }
+
+    object GenreMovieTable {
+        const val TABLE_NAME = "genre_movie"
+
+        const val COLUMN_NAME_ID_INTERNAL = BaseColumns._ID
+        const val COLUMN_NAME_MOVIE = "movie_id"
+        const val COLUMN_NAME_GENRE = "genre_id"
     }
 }
