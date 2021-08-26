@@ -50,4 +50,9 @@ class MovieRepositoryImpl(
             }
         }
     }
+
+    override suspend fun searchMovies(query: String): List<MoviePreview> {
+        val l = remoteDataSource.searchMovies(query, 1)
+        return l
+    }
 }

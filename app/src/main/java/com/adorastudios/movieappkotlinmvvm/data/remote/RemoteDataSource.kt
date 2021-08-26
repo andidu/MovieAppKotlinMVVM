@@ -10,4 +10,5 @@ interface RemoteDataSource {
     suspend fun loadMovie(id: Long) : MovieDetails
     suspend fun loadGenres() : List<Genre>
     suspend fun loadActors(id: Long) : List<Actor>
+    suspend fun searchMovies(query: String, page: Int = 1) : List<MoviePreview>
 }

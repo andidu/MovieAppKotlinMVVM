@@ -6,7 +6,7 @@ import okhttp3.Response
 class ApiKeyInterceptor: Interceptor {
 
     companion object {
-        private const val API_KEY = "977beefd06919d9a9670eb412dfb7c87"
+        const val API_KEY = "977beefd06919d9a9670eb412dfb7c87"
     }
 
     override fun intercept(chain: Interceptor.Chain): Response {

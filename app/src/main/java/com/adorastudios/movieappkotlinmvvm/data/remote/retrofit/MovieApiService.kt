@@ -32,4 +32,12 @@ interface MovieApiService {
     suspend fun loadMovieCast(
         @Path("movie_id") movieId: Long
     ): MovieCastResponse
+
+    //get movies (search)
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("api_key") apiKey: String,
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): SearchMovieResponse
 }

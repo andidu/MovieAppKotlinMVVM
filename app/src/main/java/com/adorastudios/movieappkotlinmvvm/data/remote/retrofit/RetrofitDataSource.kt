@@ -1,13 +1,19 @@
 package com.adorastudios.movieappkotlinmvvm.data.remote.retrofit
 
 import com.adorastudios.movieappkotlinmvvm.data.remote.RemoteDataSource
+import com.adorastudios.movieappkotlinmvvm.data.remote.network_module.ApiKeyInterceptor.Companion.API_KEY
 import com.adorastudios.movieappkotlinmvvm.data.remote.retrofit.response.ImageResponse
 import com.adorastudios.movieappkotlinmvvm.model.Actor
 import com.adorastudios.movieappkotlinmvvm.model.Genre
 import com.adorastudios.movieappkotlinmvvm.model.MovieDetails
 import com.adorastudios.movieappkotlinmvvm.model.MoviePreview
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.AbstractCoroutine
 
-class RetrofitDataSource (private val api: MovieApiService) : RemoteDataSource {
+class RetrofitDataSource(private val api: MovieApiService) : RemoteDataSource {
 
     companion object {
         const val DEFAULT_SIZE = "original"
@@ -81,12 +87,42 @@ class RetrofitDataSource (private val api: MovieApiService) : RemoteDataSource {
         }
     }
 
-    private fun formingUrl(url: String?, size: String?, path: String?) : String? {
+    private fun formingUrl(url: String?, size: String?, path: String?): String? {
         return if (url == null || path == null) {
             null
         } else {
-            url.plus(size.takeUnless { it.isNullOrEmpty() }?: DEFAULT_SIZE)
+            url.plus(size.takeUnless { it.isNullOrEmpty() } ?: DEFAULT_SIZE)
                 .plus(path)
         }
+    }
+
+    @FlowPreview
+    override suspend fun searchMovies(query: String, page: Int): List<MoviePreview> {
+        loadConfiguration()
+        val genres = loadGenres()
+        return withContext(Dispatchers.IO) {
+            val t = api.searchMovie(API_KEY, query, page)
+            flowOf(
+                t
+            )
+        }
+            .flowOn(Dispatchers.IO)
+            .flatMapMerge { it.results.asFlow() }
+            .map { movie ->
+                MoviePreview(
+                    id = movie.id,
+                    title = movie.title,
+                    imageUrl = formingUrl(baseUrl, posterSize, movie.posterPath),
+                    age = if (movie.adult) 16 else 13,
+                    genres = genres.filter { genre ->
+                        movie.genreIds.contains(genre.id)
+                    },
+                    runningTime = -1,
+                    reviewCount = movie.voteCount,
+                    rating = movie.voteAverage,
+                    isLiked = false
+                )
+            }
+            .toList()
     }
 }

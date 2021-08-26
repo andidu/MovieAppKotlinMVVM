@@ -10,4 +10,5 @@ interface MovieRepository {
 
     suspend fun loadMoviesLocale(): Result<List<MoviePreview>>
     suspend fun loadMovieLocale(movieId: Long): Result<MovieDetails>
+    suspend fun searchMovies(query: String): List<MoviePreview>
 }

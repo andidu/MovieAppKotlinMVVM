@@ -18,4 +18,8 @@
     <string name="movie_list_updated">Movie list updated</string>
     <string name="error_while_loading_movies">Error while loading movies</string>
     <string name="unable_to_update_movie_list">Unable to update movie list</string>
+    <string name="search_error_result">Something is wrong with Internet connection</string>
+    <string name="search_empty_result">No results matching your search</string>
+    <string name="search_empty_query">Empty search</string>
+    <string name="search_terminal_error">This should not be shown</string>
 </resources>

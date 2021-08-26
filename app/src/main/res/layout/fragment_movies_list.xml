@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="16dp"
+        app:layout_constraintGuide_begin="8dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -34,18 +33,66 @@
         android:id="@+id/editTextSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/background_black_touchable"
         android:ems="10"
         android:hint="@android:string/search_go"
         android:inputType="textShortMessage"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/viewSearch"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop"
+        android:importantForAutofill="no" />
+
+    <View
+        android:id="@+id/viewSearch"
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSearchAnim"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+
+    <ImageView
+        android:id="@+id/imageViewSearchStat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_black_touchable"
+        android:padding="4dp"
+        android:src="@drawable/ic_close_24"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/imageViewSearchAnim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_black_not_touchable"
+        android:src="@drawable/loading"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSearch"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSearchStat"
+        app:layout_constraintTop_toTopOf="@+id/editTextSearch"
+        app:loopCount="0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovies"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSearch">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMoviesSearch"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"

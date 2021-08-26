@@ -6,15 +6,7 @@ import com.adorastudios.movieappkotlinmvvm.data.locale.MovieDbContract
 @Entity(
     tableName = MovieDbContract.MovieDetailsTable.TABLE_NAME,
     primaryKeys = [MovieDbContract.MovieDetailsTable.COLUMN_NAME_ID],
-    indices = [Index(MovieDbContract.MovieDetailsTable.COLUMN_NAME_ID)],
-    foreignKeys = [
-        ForeignKey(
-            entity = MoviePreviewsDB::class,
-            parentColumns = [MovieDbContract.MoviePreviewsTable.COLUMN_NAME_ID],
-            childColumns = [MovieDbContract.MovieDetailsTable.COLUMN_NAME_ID],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+    indices = [Index(MovieDbContract.MovieDetailsTable.COLUMN_NAME_ID)]
 )
 class MovieDetailsDB(
     @ColumnInfo(name = MovieDbContract.MovieDetailsTable.COLUMN_NAME_ID)

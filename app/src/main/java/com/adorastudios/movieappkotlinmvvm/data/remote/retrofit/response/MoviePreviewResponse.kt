@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class MoviePreviewResponse (
-    @SerialName("poster_path") val posterPath : String,
+    @SerialName("poster_path") val posterPath : String?,
     @SerialName("adult") val adult : Boolean,
     @SerialName("genre_ids") val genreIds : List<Int>,
     @SerialName("id") val id : Long,
